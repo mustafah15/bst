@@ -1,0 +1,42 @@
+{
+  "name": "datastructurelib",
+  "version": "1.0.0",
+  "description": "basic datastructure lib",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mustafah15/JSDatastructure.git"
+  },
+  "keywords": [
+    "javascript",
+    "datastructure",
+    "binarysearchtree",
+    "bst"
+  ],
+  "contributors": [
+    {
+      "name": "Mustafa Hussain <mustafah15>",
+      "email": "mustafa.hussain93@gmail.com"
+    }
+  ],
+  "author": "Mustafa Hussain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mustafah15/JSDatastructure/issues"
+  },
+  "homepage": "https://github.com/mustafah15/JSDatastructure#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^4.11.0",
+    "eslint-config-crowdanalyzer": "^1.3.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
+}
