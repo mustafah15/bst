@@ -9,6 +9,12 @@ class Node {
         this.parent = parent;
     }
 
+    delete() {
+        delete this.data;
+        delete this.right;
+        delete this.left;
+    }
+
 }
 
 class BinarySearchTree {
@@ -53,7 +59,7 @@ class BinarySearchTree {
             parent = parent.parent;
         }
 
-        return parent.data;
+        return parent;
     }
 
     _predecessor(node) {
@@ -67,9 +73,37 @@ class BinarySearchTree {
             node = parent;
             parent = parent.parent;
         }
-        
+
         return parent.date;
     }
+
+    deleteNode(data) {
+        let node = this.find(data);
+        if(node === null) {
+            return;
+        }
+        if(node.left === null && node.right === null) {
+            node.delete();
+            node = null;
+            return;
+        }
+        if(node.left === null) {
+            node.parent.right = node.right;
+            node.delete();
+            return;
+        } else if(node.right === null) {
+            node.parent.left = node.left;
+            node.delete();
+            return;
+        } else {
+            const successor = this._successor(node.data);
+            const temp = successor.data;
+            this.deleteNode(successor.data);
+            node.data = temp;
+            return;
+        }
+    }
+
     /**
      * @summary add new node
      * @param {*} data
@@ -94,7 +128,7 @@ class BinarySearchTree {
         while(current.left !== null) {
             current = current.left;
         }
-        return current.data;
+        return current;
     }
 
     /**
@@ -107,7 +141,7 @@ class BinarySearchTree {
         while(current.right !== null) {
             current = current.right;
         }
-        return current.data;
+        return current;
     }
 
     /**
@@ -163,7 +197,7 @@ class BinarySearchTree {
      */
     _traverseInOrder(node) {
         node.left && this._traverseInOrder(node.left);
-        console.log(node);
+        node.data && console.log(node);
         node.right && this._traverseInOrder(node.right);
     }
 
