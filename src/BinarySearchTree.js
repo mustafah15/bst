@@ -46,14 +46,30 @@ class BinarySearchTree {
         if(node.right !== null) {
             return this.findMin(node.right);
         }
+
         let parent = node.parent;
         while(parent !== null && node === parent.right) {
             node = parent;
             parent = parent.parent;
         }
+
         return parent.data;
     }
 
+    _predecessor(node) {
+        node = this.find(node);
+        if(node.left !== null) {
+            return this.findMax(node.left);
+        }
+
+        let parent = node.parent;
+        while(parent !== null && node === parent.left) {
+            node = parent;
+            parent = parent.parent;
+        }
+        
+        return parent.date;
+    }
     /**
      * @summary add new node
      * @param {*} data
