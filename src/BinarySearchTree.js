@@ -2,10 +2,11 @@
 
 class Node {
 
-    constructor(data, left = null, right = null) {
+    constructor(data, left = null, right = null, parent = null) {
         this.data = data;
         this.left = left;
         this.right = right;
+        this.parent = parent;
     }
 
 }
@@ -23,14 +24,14 @@ class BinarySearchTree {
     _searchTree(data, node) {
         if(data < node.data) {
             if(node.left === null) {
-                node.left = new Node(data);
+                node.left = new Node(data, null, null, node);
                 return;
             } else if(node.left !== null) {
                 return this._searchTree(data, node.left);
             }
         } else if(data > node.data) {
             if(node.right === null) {
-                node.right = new Node(data);
+                node.right = new Node(data, null, null, node);
                 return;
             } else if(node.right !== null) {
                 return this._searchTree(data, node.right);
@@ -38,6 +39,19 @@ class BinarySearchTree {
         } else {
             return null;
         }
+    }
+
+    _successor(node) {
+        node = this.find(node);
+        if(node.right !== null) {
+            return this.findMin(node.right);
+        }
+        let parent = node.parent;
+        while(parent !== null && node === parent.right) {
+            node = parent;
+            parent = parent.parent;
+        }
+        return parent.data;
     }
 
     /**
@@ -57,8 +71,10 @@ class BinarySearchTree {
     /**
      * @summary find the min key value in the tree
      * */
-    findMin() {
-        let current = this.root;
+    findMin(current = null) {
+        if(current === null) {
+            current = this.root;
+        }
         while(current.left !== null) {
             current = current.left;
         }
@@ -68,8 +84,10 @@ class BinarySearchTree {
     /**
     * @summary find max key value in the tree
     */
-    findMax() {
-        let current = this.root;
+    findMax(current = null) {
+        if(current === null) {
+            current = this.root;
+        }
         while(current.right !== null) {
             current = current.right;
         }
@@ -129,7 +147,7 @@ class BinarySearchTree {
      */
     _traverseInOrder(node) {
         node.left && this._traverseInOrder(node.left);
-        console.log(node.data);
+        console.log(node);
         node.right && this._traverseInOrder(node.right);
     }
 
