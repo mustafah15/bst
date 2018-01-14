@@ -1,5 +1,7 @@
 'uset strict';
 
+const _ = require('lodash');
+
 class Node {
 
     constructor(data, left = null, right = null, parent = null) {
@@ -29,17 +31,17 @@ class BinarySearchTree {
      * */
     _searchTree(data, node) {
         if(data < node.data) {
-            if(node.left === null) {
+            if(_.isNil(node.left)) {
                 node.left = new Node(data, null, null, node);
                 return;
-            } else if(node.left !== null) {
+            } else if(!_.isNil(node.left)) {
                 return this._searchTree(data, node.left);
             }
         } else if(data > node.data) {
-            if(node.right === null) {
+            if(_.isNil(node.right)) {
                 node.right = new Node(data, null, null, node);
                 return;
-            } else if(node.right !== null) {
+            } else if(!_.isNil(node.right)) {
                 return this._searchTree(data, node.right);
             }
         } else {
@@ -54,7 +56,7 @@ class BinarySearchTree {
         }
 
         let parent = node.parent;
-        while(parent !== null && node === parent.right) {
+        while(!_.isNil(parent) && node === parent.right) {
             node = parent;
             parent = parent.parent;
         }
@@ -79,19 +81,21 @@ class BinarySearchTree {
 
     deleteNode(data) {
         let node = this.find(data);
-        if(node === null) {
+        if(_.isNil(node)) {
             return;
         }
-        if(node.left === null && node.right === null) {
+
+        if(_.isNil(node.left) && _.isNil(node.right)) {
             node.delete();
             node = null;
             return;
         }
-        if(node.left === null) {
+
+        if(_.isNil(node.left)) {
             node.parent.right = node.right;
             node.delete();
             return;
-        } else if(node.right === null) {
+        } else if(_.isNil(node.right)) {
             node.parent.left = node.left;
             node.delete();
             return;
@@ -110,7 +114,7 @@ class BinarySearchTree {
      * */
     add(data) {
         const node = this.root;
-        if(node === null) {
+        if(_.isNil(node)) {
             this.root = new Node(data);
             return;
         } else {
@@ -122,12 +126,14 @@ class BinarySearchTree {
      * @summary find the min key value in the tree
      * */
     findMin(current = null) {
-        if(current === null) {
+        if(_.isNil(current)) {
             current = this.root;
         }
-        while(current.left !== null) {
+
+        while(!_.isNil(current.left)) {
             current = current.left;
         }
+
         return current;
     }
 
@@ -135,12 +141,14 @@ class BinarySearchTree {
     * @summary find max key value in the tree
     */
     findMax(current = null) {
-        if(current === null) {
+        if(_.isNil(current)) {
             current = this.root;
         }
-        while(current.right !== null) {
+
+        while(_.isNil(current.right)) {
             current = current.right;
         }
+
         return current;
     }
 
@@ -155,7 +163,7 @@ class BinarySearchTree {
             } else {
                 current = current.right;
             }
-            if(current === null) {
+            if(_.isNil(current)) {
                 return null;
             }
         }
@@ -166,7 +174,7 @@ class BinarySearchTree {
      * @summary tree in order traverse
      */
     inOrder() {
-        if(this.root === null) {
+        if(_.isNil(this.root)) {
             return null;
         }
         this._traverseInOrder(this.root);
@@ -176,7 +184,7 @@ class BinarySearchTree {
      * @summary tree post order traverse
      * */
     postOrder() {
-        if(this.root === null) {
+        if(_.isNil(this.root)) {
             return null;
         }
         this._traversePostOrder(this.root);
@@ -186,7 +194,7 @@ class BinarySearchTree {
      * @summary tree pre order traverse
      * */
     preOrder() {
-        if(this.root === null) {
+        if(_.isNil(this.root)) {
             return null;
         }
         this._traversePreOrder(this.root);
