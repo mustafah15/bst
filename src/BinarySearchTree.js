@@ -1,23 +1,7 @@
 'uset strict';
 
 const _ = require('lodash');
-
-class Node {
-
-    constructor(data, left = null, right = null, parent = null) {
-        this.data = data;
-        this.left = left;
-        this.right = right;
-        this.parent = parent;
-    }
-
-    delete() {
-        delete this.data;
-        delete this.right;
-        delete this.left;
-    }
-
-}
+const Node = require('Node');
 
 class BinarySearchTree {
 
@@ -92,11 +76,19 @@ class BinarySearchTree {
         }
 
         if(_.isNil(node.left)) {
-            node.parent.right = node.right;
+            if(node.parent.left.data === node.data) {
+                node.parent.left = node.right;
+            } else if(node.parent.right.data === node.data) {
+                node.parent.right = node.right;
+            }
             node.delete();
             return;
         } else if(_.isNil(node.right)) {
-            node.parent.left = node.left;
+            if(node.parent.left.data === node.data) {
+                node.parent.left = node.left;
+            } else if(node.parent.right.data === node.data) {
+                node.parent.right = node.left;
+            }
             node.delete();
             return;
         } else {
